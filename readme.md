@@ -6,12 +6,12 @@ This is a port of the idea behind [`esbuild`](https://esbuild.github.io/api/#wat
 
 ## Features
 
-Unless you really want this I'd recommend a [normal](https://github.com/fabiospampinato/watcher) filesystem watcher instead, since polling can get expensive.
+Unless you really want this I'd recommend using a [normal](https://github.com/fabiospampinato/watcher) filesystem watcher instead, since polling can get expensive.
 
 - Changes happening inside the root folder should get picked up roughly within `options.pollingIntervalCold / 2` milliseconds on average.
 - Changes happening inside files that the watcher already saw changing should get picked up roughly within `options.pollingIntervalHot / 2` milliseconds on average.
 - Basically files that changed already are considered hot and polled frequently, while random subsets of the other files are polled infrequently.
-- This should be roughly `options.pollingIntervalCold / options.pollingIntervalHot` times cheaper than just polling every file in each iteration.
+- This should be roughly `options.pollingIntervalCold / options.pollingIntervalHot` times cheaper than just polling every file on a `options.pollingIntervalHot` interval.
 
 In some niche scenarios a filesystem watcher that works like this could be useful:
 
