@@ -1,0 +1,35 @@
+{
+  "name": "pollex",
+  "repository": "github:fabiospampinato/pollex",
+  "description": "A tiny polling-based filesystem watcher that tries to be efficient.",
+  "version": "1.0.0",
+  "type": "module",
+  "main": "dist/index.js",
+  "exports": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "clean": "tsex clean",
+    "compile": "tsex compile",
+    "compile:watch": "tsex compile --watch",
+    "test": "tsex test",
+    "test:watch": "tsex test --watch",
+    "prepublishOnly": "tsex prepare"
+  },
+  "keywords": [
+    "tiny",
+    "filesystem",
+    "watcher",
+    "poll",
+    "polling",
+    "esbuild"
+  ],
+  "dependencies": {
+    "tiny-readdir": "^2.2.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.3.3",
+    "fava": "^0.2.0",
+    "tsex": "^2.2.4",
+    "typescript": "^4.9.5"
+  }
+}
