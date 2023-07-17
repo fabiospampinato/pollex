@@ -18,6 +18,7 @@ const pollex = ( rootPath: string, handler: Handler, options: Options = {} ): Di
   /* STATE */
 
   const ignoreInitial = options.ignoreInitial ?? false;
+  const ignoreReady = options.ignoreReady ?? false;
   const pollingIntervalCold = options.pollingIntervalCold ?? 2000;
   const pollingIntervalHot = options.pollingIntervalHot ?? 50;
 
@@ -40,6 +41,8 @@ const pollex = ( rootPath: string, handler: Handler, options: Options = {} ): Di
     if ( signal.aborted ) return;
 
     if ( initial && ignoreInitial && event !== 'ready' ) return;
+
+    if ( ignoreReady && event === 'ready' ) return;
 
     handler ( event, targetPath );
 

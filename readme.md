@@ -40,6 +40,7 @@ const pollexOptions = {
   followSymlinks: true, // Whether to follow symlinks or not
   ignore: targetPath => /node_modules/.test ( targetPath ), // Function that if returns true will ignore this particular file or a directory and its descendants
   ignoreInitial: true, // Ignore the initial "add" and "addDir" events while the folder is being scanned the first time
+  ignoreReady: true, // Ignore the "ready" event, useful in combination with "ignoreInitial: true" to only get notified about actual changes
   pollingIntervalCold: 2000, // Poll all cold files, in different random subsets, within this amount of time, roughly
   pollingIntervalHot: 50 // Poll all hot files within this amount of time, roughly
 };

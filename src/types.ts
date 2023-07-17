@@ -15,6 +15,7 @@ type Options = {
   followSymlinks?: boolean,
   ignore?: Ignore,
   ignoreInitial?: boolean,
+  ignoreReady?: boolean,
   pollingIntervalCold?: number,
   pollingIntervalHot?: number
 };

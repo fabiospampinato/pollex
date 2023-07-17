@@ -23,6 +23,7 @@ describe ( 'Pollex', it => {
 
     const dispose = pollex ( ROOT_PATH, ( event, path ) => events.push ({ event, path }), {
       ignoreInitial: true,
+      ignoreReady: false,
       pollingIntervalCold: 400,
       pollingIntervalHot: 40
     });
