@@ -1,8 +1,9 @@
 
 /* IMPORT */
 
+import LRU from 'picolru';
 import readdir from 'tiny-readdir';
-import {difference, without, consume, shuffle, stat} from './utils';
+import {difference, consume, shuffle, stat} from './utils';
 import type {Disposer, Event, Handler, Options} from './types';
 
 /* MAIN */
@@ -26,7 +27,7 @@ const pollex = ( rootPath: string, handler: Handler, options: Options = {} ): Di
   const signal = { aborted: false };
 
   let filesCold = new Set<string> ();
-  let filesHot = new Set<string> ();
+  let filesHot = new LRU<string, true> ({ maxSize: 16 });
 
   let initial = true;
   let lastScanTimestamp = -1;
@@ -57,7 +58,7 @@ const pollex = ( rootPath: string, handler: Handler, options: Options = {} ): Di
 
     } else {
 
-      filesHot.add ( targetPath ); //TODO: Maybe add a "filesWarm" tier for this, many files could be added at once but never edited
+      filesHot.set ( targetPath, true ); //TODO: Maybe add a "filesWarm" tier for this, many files could be added at once but never edited
 
     }
 
@@ -76,7 +77,7 @@ const pollex = ( rootPath: string, handler: Handler, options: Options = {} ): Di
     on ( 'change', targetPath );
 
     filesCold.delete ( targetPath );
-    filesHot.add ( targetPath );
+    filesHot.set ( targetPath, true );
     filesMtimes.set ( targetPath, modified );
 
   };
@@ -135,14 +136,14 @@ const pollex = ( rootPath: string, handler: Handler, options: Options = {} ): Di
     directoriesAdded.forEach ( onAddDir );
     filesAdded.forEach ( onAdd );
 
-    filesCold = new Set ( shuffle ([ ...without ( files, filesHot ) ]) );
+    filesCold = new Set ( shuffle ([ ...files ]) );
     pollingChunkSize = Math.ceil ( filesCold.size / ( ( pollingIntervalCold / pollingIntervalHot ) - 1 ) );
 
   };
 
-  const refreshFiles = async ( filePaths: Set<string> ): Promise<void> => {
+  const refreshFiles = async ( filePaths: Set<string> | LRU<string, unknown> ): Promise<void> => {
 
-    for ( const filePath of filePaths ) {
+    for ( const filePath of filePaths.keys () ) {
 
       const stats = stat ( filePath );
       const mtimeMs = filesMtimes.get ( filePath );
