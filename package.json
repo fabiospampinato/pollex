@@ -24,7 +24,7 @@
     "esbuild"
   ],
   "dependencies": {
-    "picolru": "^1.1.0",
+    "picolru": "^1.2.0",
     "tiny-readdir": "^2.2.0"
   },
   "devDependencies": {

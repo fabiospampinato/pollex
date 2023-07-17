@@ -141,7 +141,7 @@ const pollex = ( rootPath: string, handler: Handler, options: Options = {} ): Di
 
   };
 
-  const refreshFiles = async ( filePaths: Set<string> | LRU<string, unknown> ): Promise<void> => {
+  const refreshFiles = async ( filePaths: Set<string> | Map<string, unknown> ): Promise<void> => {
 
     for ( const filePath of filePaths.keys () ) {
 
