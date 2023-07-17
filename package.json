@@ -2,7 +2,7 @@
   "name": "pollex",
   "repository": "github:fabiospampinato/pollex",
   "description": "A tiny polling-based filesystem watcher that tries to be efficient.",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "type": "module",
   "main": "dist/index.js",
   "exports": "./dist/index.js",
