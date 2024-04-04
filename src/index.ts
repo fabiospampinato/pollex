@@ -239,3 +239,4 @@ const pollex = ( rootPath: string, handler: Handler, options: Options = {} ): Di
 /* EXPORT */
 
 export default pollex;
+export type {Event, Handler, Options};
